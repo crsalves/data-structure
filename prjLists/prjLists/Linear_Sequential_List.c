@@ -22,40 +22,40 @@ typedef int KEYTYPE;
 
 typedef struct {
 	KEYTYPE key;
-}REGISTER;
+}Register;
 
 typedef struct {
-	REGISTER tabElem[MAX];
+	Register tabElem[MAX];
 	int nbElem;
-}LIST;
+}List;
 
 /* 
 	1) Initializing the list
 	We must use a pointer as a parameter, otherwise the list will not be updated.
 */
-void initializeSequentialList(LIST * anyList) {
+void initializeSequentialList(List * anyList) {
 	anyList->nbElem = 0;
 }
 
 /* 
 	2) Displaying all elements stored in the list
 */
-void displayList(LIST* anyList) {
+void displayList(List* anyList) {
 	for(int indx = 0; indx < anyList->nbElem; indx++)
-		printf("%i:\n", anyList->tabElem[indx].key);
+		printf("[%i] = %i\n", indx, anyList->tabElem[indx].key);
 }
 
 /*
 	3)  Finding the total number of elements stored in the list
 */
-int findNbElements(LIST* anyList) {
+int findNbElements(List* anyList) {
 	return anyList->nbElem;
 }
 
 /*
 	4) Getting the first value stored in the list
 */
-KEYTYPE getFirstElement(LIST* anyList) {
+KEYTYPE getFirstElement(List* anyList) {
 	if (anyList->nbElem > 0)
 		return (anyList->tabElem[0].key);
 	else
@@ -65,7 +65,7 @@ KEYTYPE getFirstElement(LIST* anyList) {
 /*
 	5) Getting the last value stored in the list
 */
-KEYTYPE getLastElement(LIST* anyList) {
+KEYTYPE getLastElement(List* anyList) {
 	if (anyList->nbElem > 0)
 		return (anyList->tabElem[anyList->nbElem-1].key);
 	else
@@ -75,7 +75,7 @@ KEYTYPE getLastElement(LIST* anyList) {
 /*
 	6) Searching in the sequential list
 */
-int searchSequentialList(LIST* anyList, KEYTYPE anyKey) {
+int searchSequentialList(List* anyList, KEYTYPE anyKey) {
 	int indx = 0;
 	while (indx < anyList->nbElem) {
 		if (anyKey == anyList->tabElem[indx].key)
@@ -96,7 +96,7 @@ int searchSequentialList(LIST* anyList, KEYTYPE anyKey) {
 		1.1 Else 
 			1.1.1 Return false
 */
-bool insertElemList(LIST* anyList, REGISTER anyReg, int pos) {
+bool insertElemList(List* anyList, Register anyReg, int pos) {
 	int indx;
 
 	if ((anyList->nbElem == MAX) || (pos < 0) || pos > anyList->nbElem)
@@ -120,7 +120,7 @@ bool insertElemList(LIST* anyList, REGISTER anyReg, int pos) {
 		2. Move one position back all elements in the right side
 		3. Decrement nbElements
 */
-bool deleteElemList(LIST* anyList, KEYTYPE anyKey) {
+bool deleteElemList(List* anyList, KEYTYPE anyKey) {
 	int pos = searchSequentialList(anyList, anyKey);
 
 	if (pos == -1)
@@ -139,12 +139,21 @@ bool deleteElemList(LIST* anyList, KEYTYPE anyKey) {
 /*
 	9) Reinitializing the list
 */
-void initializeSequentialList(LIST* anyList) {
+void reinitializeSequentialList(List* anyList) {
 	anyList->nbElem = 0;
 }
 
 
 int main() {
+
+	List myList;
+	initializeSequentialList(&myList);
+
+	Register crrYear;
+	crrYear.key = 2020;
+	insertElemList(&myList, crrYear, 0);
+
+	displayList(&myList);
 
 	return 0;
 }
