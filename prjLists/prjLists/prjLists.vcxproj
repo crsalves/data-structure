@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Binary_Search_List.c" />
     <ClCompile Include="Linear_Sequential_List.c" />
     <ClCompile Include="Sentinel_Search_List.c" />
   </ItemGroup>

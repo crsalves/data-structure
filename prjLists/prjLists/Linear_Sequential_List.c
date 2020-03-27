@@ -144,7 +144,7 @@
 //}
 //
 //
-//int main() {
+//int mainList() {
 //
 //	List myList;
 //	initializeSequentialList(&myList);
