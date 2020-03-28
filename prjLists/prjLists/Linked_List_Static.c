@@ -10,7 +10,7 @@
 
 #include"stdio.h"
 #include"stdbool.h"
-#define MAX 4
+#define MAX 50
 #define INVALID -1
 
 typedef int KEYTYPE;
@@ -113,12 +113,12 @@ int searchSeqLinkListOrdStatic(List* anyList, KEYTYPE anyKey) {
 /*
 	**Auxiliary function for insertation
 */
-int getAvailablePosLinkListStatic(List* anyList) {
-	int crrAvailable = anyList->availPos;
+int getAvailablePosLinkListStatic(List anyList) {
+	int crrAvailable = anyList.availPos;
 
 	// Updating the available position for the next insertation
-	if (anyList->availPos != INVALID) {
-		anyList->availPos = anyList->tabElem[anyList->availPos].nextPos;
+	if (anyList.availPos != INVALID) {
+		anyList.availPos = anyList.tabElem[anyList.availPos].nextPos;
 	}
 	return crrAvailable;
 }
@@ -149,9 +149,9 @@ bool insertElemLinkListOrdStatic(List* anyList, Register anyReg) {
 		return false;
 
 	// **Auxiliary function
-	crrPos = getAvailablePosLinkListStatic(&anyList);
+	crrPos = getAvailablePosLinkListStatic(*anyList);
 
-	anyList->tabElem[crrPos].reg = anyReg;
+	anyList->tabElem[crrPos].reg.key = anyReg.key;
 
 	// If it is the first element that will be inserted
 	if (prevPos == INVALID) {
@@ -217,16 +217,16 @@ int main() {
 	List myList;
 	initializeLinkListStatic(&myList);
 
-	Element crrYear;
-	crrYear.reg.key = 2020;
-	insertElemLinkListOrdStatic(&myList, crrYear.reg);
-
-	crrYear.reg.key = 500;
-    insertElemLinkListOrdStatic(&myList, crrYear.reg);
-	displayLinkedListStatic(&myList);
+	Register crrYear;
+	crrYear.key = 2020;
+	insertElemLinkListOrdStatic(&myList, crrYear);
+	
+	crrYear.key = 500;
+    insertElemLinkListOrdStatic(&myList, crrYear);
+	// displayLinkedListStatic(&myList);
 
 	//crrYear.reg.key = 2020;
-	printf("%i\n", searchSeqLinkListOrdStatic(&myList, crrYear.reg.key));
+	printf("%i\n", searchSeqLinkListOrdStatic(&myList, crrYear.key));
 	printf("First element is %i\n", getFstElemLinkListStatic(&myList));
 	printf("Last element is %i\n", getLstElemLinkListStatic(&myList));
 	return 0;
