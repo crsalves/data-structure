@@ -76,7 +76,7 @@ int findNbElemLinkListStatic(List* anyList) {
 KEYTYPE getFstElemLinkListStatic(List* anyList) {
 	int length = findNbElemLinkListStatic(anyList);
 	if (length > 0) {
-		return anyList->tabElem[0].reg.key;
+		return (anyList->tabElem[anyList->stPos].reg.key);
 	}		
 	else
 		return (-1); //empty list
@@ -88,7 +88,7 @@ KEYTYPE getFstElemLinkListStatic(List* anyList) {
 KEYTYPE getLstElemLinkListStatic(List* anyList) {
 	int length = findNbElemLinkListStatic(anyList);
 	if (length > 0)
-		return (anyList->tabElem[anyList->stPos].reg.key);
+		return (anyList->tabElem[anyList->availPos-1].reg.key);
 	else
 		return (-1); //empty list
 }
@@ -219,14 +219,17 @@ int main() {
 	initializeLinkListStatic(&myList);
 
 	Register crrYear;
-	crrYear.key = 2020;
+	crrYear.key = 10;
 	insertElemLinkListOrdStatic(&myList, crrYear);
-	
-	crrYear.key = 500;
+	crrYear.key = 20;
+	insertElemLinkListOrdStatic(&myList, crrYear);
+	crrYear.key = 30;
+	insertElemLinkListOrdStatic(&myList, crrYear);
+	crrYear.key = 40;
     insertElemLinkListOrdStatic(&myList, crrYear);
 	 displayLinkedListStatic(&myList);
 
-	crrYear.key = 2020;
+	crrYear.key = 20;
 	printf("%i\n", searchSeqLinkListOrdStatic(&myList, crrYear.key));
 	printf("First element is %i\n", getFstElemLinkListStatic(&myList));
 	printf("Last element is %i\n", getLstElemLinkListStatic(&myList));
