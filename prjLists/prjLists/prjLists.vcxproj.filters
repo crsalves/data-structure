@@ -24,5 +24,8 @@
     <ClCompile Include="Binary_Search_List.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Linked_List_Static.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
