@@ -113,12 +113,12 @@ int searchSeqLinkListOrdStatic(List* anyList, KEYTYPE anyKey) {
 /*
 	**Auxiliary function for insertation
 */
-int getAvailablePosLinkListStatic(List anyList) {
-	int crrAvailable = anyList.availPos;
+int getAvailablePosLinkListStatic(List* anyList) {
+	int crrAvailable = anyList->availPos;
 
 	// Updating the available position for the next insertation
-	if (anyList.availPos != INVALID) {
-		anyList.availPos = anyList.tabElem[anyList.availPos].nextPos;
+	if (anyList->availPos != INVALID) {
+		anyList->availPos = anyList->tabElem[anyList->availPos].nextPos;
 	}
 	return crrAvailable;
 }
@@ -149,7 +149,7 @@ bool insertElemLinkListOrdStatic(List* anyList, Register anyReg) {
 		return false;
 
 	// **Auxiliary function
-	crrPos = getAvailablePosLinkListStatic(*anyList);
+	crrPos = getAvailablePosLinkListStatic(anyList);
 
 	anyList->tabElem[crrPos].reg.key = anyReg.key;
 
@@ -223,7 +223,7 @@ int main() {
 	
 	crrYear.key = 500;
     insertElemLinkListOrdStatic(&myList, crrYear);
-	// displayLinkedListStatic(&myList);
+	 displayLinkedListStatic(&myList);
 
 	//crrYear.reg.key = 2020;
 	printf("%i\n", searchSeqLinkListOrdStatic(&myList, crrYear.key));
