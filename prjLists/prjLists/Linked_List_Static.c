@@ -10,7 +10,7 @@
 
 #include"stdio.h"
 #include"stdbool.h"
-#define MAX 50
+#define MAX 4
 #define INVALID -1
 
 typedef int KEYTYPE;
@@ -117,7 +117,7 @@ int getAvailablePosLinkListStatic(List* anyList) {
 	int crrAvailable = anyList->availPos;
 
 	// Updating the available position for the next insertation
-	if (crrAvailable != INVALID) {
+	if (anyList->availPos != INVALID) {
 		anyList->availPos = anyList->tabElem[anyList->availPos].nextPos;
 	}
 	return crrAvailable;
@@ -217,17 +217,16 @@ int main() {
 	List myList;
 	initializeLinkListStatic(&myList);
 
-	Register crrYear;
-	crrYear.key = 2020;
+	Element crrYear;
+	crrYear.reg.key = 2020;
+	insertElemLinkListOrdStatic(&myList, crrYear.reg);
 
-	insertElemLinkListOrdStatic(&myList, crrYear);
-
-	crrYear.key = 500;
-	insertElemLinkListOrdStatic(&myList, crrYear);
+	crrYear.reg.key = 500;
+    insertElemLinkListOrdStatic(&myList, crrYear.reg);
 	displayLinkedListStatic(&myList);
 
-	crrYear.key = 2020;
-	printf("%i\n", searchSeqLinkListOrdStatic(&myList, crrYear.key));
+	//crrYear.reg.key = 2020;
+	printf("%i\n", searchSeqLinkListOrdStatic(&myList, crrYear.reg.key));
 	printf("First element is %i\n", getFstElemLinkListStatic(&myList));
 	printf("Last element is %i\n", getLstElemLinkListStatic(&myList));
 	return 0;
