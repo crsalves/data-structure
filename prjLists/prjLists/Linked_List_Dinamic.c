@@ -19,7 +19,7 @@ typedef struct {
 	KEYTYPE key;
 }Register;
 
-typedef struct {
+typedef struct aux {
 	Register reg;
 	struct aux* nextPos;// This pointer is called "auxiliary" because it was not created yeah!
 }Element;
@@ -27,21 +27,21 @@ typedef struct {
 typedef Element* POINTER;
 
 typedef struct {
-	POINTER stPos;
+	POINTER firstPos;
 }List;
 
 /*
 	1) Initializing the list
 */
 void initializeLinkListDinamic(List* anyList) {
-	anyList->stPos = NULL;
+	anyList->firstPos = NULL;
 }
 
 /*
 	2) Displaying all elements stored in the list
 */
 void displayLinkedListDinamic(List* anyList) {
-	POINTER end = anyList->stPos;
+	POINTER end = anyList->firstPos;
 	int counter = 0;// Just for view purposes (to show the index for the user)
 	while (end != NULL) {
 		printf("[%i] = %i\n", counter, end->reg.key);
@@ -54,7 +54,7 @@ void displayLinkedListDinamic(List* anyList) {
 	3)  Finding the total number of elements stored in the list
 */
 int findNbElemLinkListDinamic(List* anyList) {
-	POINTER end = anyList->stPos;
+	POINTER end = anyList->firstPos;
 	int listSize = 0;
 
 	while (end != NULL) {
@@ -70,7 +70,7 @@ int findNbElemLinkListDinamic(List* anyList) {
 KEYTYPE getFstElemLinkListDinamic(List* anyList) {
 	int length = findNbElemLinkListDinamic(anyList);
 	if (length > 0) {
-		return (anyList->stPos->reg.key);
+		return (anyList->firstPos->reg.key);
 	}
 	else
 		return (-1); //empty list
@@ -79,12 +79,14 @@ KEYTYPE getFstElemLinkListDinamic(List* anyList) {
 /*
 	5) Getting the last value stored in the list
 */
-KEYTYPE getLstElemLinkListDinamic(List* anyList) {
-	int length = findNbElemLinkListDinamic(anyList);
-	if (length > 0)
-		return (anyList->stPos->reg.key);
-	else
-		return (-1); //empty list
+int getLstElemLinkListDinamic(List* anyList) {
+	POINTER end = anyList->firstPos;
+	while (end != NULL) {
+		end = end->nextPos;
+		if (end->nextPos == NULL)
+			return end->reg.key;
+	}
+	return (-1); //empty list
 }
 
 /*
@@ -92,7 +94,7 @@ KEYTYPE getLstElemLinkListDinamic(List* anyList) {
 		**1st APPROACH: Unordered list
 */
 POINTER searchSeqLinkListUnordDinamic(List* anyList, KEYTYPE anyKey) {
-	POINTER pos = anyList->stPos;
+	POINTER pos = anyList->firstPos;
 
 	while (pos != NULL) {
 		if (pos->reg.key == anyKey)// Testing inside the loop is more expensive
@@ -107,9 +109,9 @@ POINTER searchSeqLinkListUnordDinamic(List* anyList, KEYTYPE anyKey) {
 		**2nd APPROACH: Ordered list
 */
 int searchSeqLinkListOrdDinamic(List* anyList, KEYTYPE anyKey) {
-	POINTER pos = anyList->stPos;
+	POINTER pos = anyList->firstPos;
 
-	while ((pos != NULL) && (pos->reg.key == anyKey)) {
+	while ((pos != NULL) && (pos->reg.key < anyKey)) {
 		pos = pos->nextPos;
 	}
 
@@ -126,9 +128,10 @@ int searchSeqLinkListOrdDinamic(List* anyList, KEYTYPE anyKey) {
 */
 int getAvailablePosLinkListDinamic(List* anyList, KEYTYPE anyKey, POINTER* anyPred) {
 	*anyPred = NULL;
-	POINTER current = anyList->stPos;
+	POINTER current = anyList->firstPos;
 
-	while ((current != NULL) && (current->reg.key == anyKey)) {
+	// Checking values to store neatly
+	while ((current != NULL) && (current->reg.key < anyKey)) {
 		*anyPred = current;
 		current = current->nextPos;
 	}
@@ -164,8 +167,8 @@ bool insertElemLinkListOrdDinamic(List* anyList, Register anyReg) {
 
 	// Setting the pointers
 	if (nPred == NULL) {
-		nAddress->nextPos = anyList->stPos;
-		anyList->stPos = nAddress;
+		nAddress->nextPos = anyList->firstPos;
+		anyList->firstPos = nAddress;
 	}
 	else {
 		nAddress->nextPos = nPred->nextPos;
@@ -191,7 +194,7 @@ bool deleteElemLinkListDinamic(List* anyList, KEYTYPE anyKey) {
 
 	// Checking if the it is the first element of the list
 	if (nPred == NULL)
-		anyList->stPos = nAddress->nextPos;
+		anyList->firstPos = nAddress->nextPos;
 	else
 		nPred->nextPos = nAddress->nextPos;
 
@@ -204,14 +207,14 @@ bool deleteElemLinkListDinamic(List* anyList, KEYTYPE anyKey) {
 	*** Always free the memory space!!!!
 */
 void reinitializeSeqLinkListDinamic(List* anyList) {
-	POINTER end = anyList->stPos;
+	POINTER end = anyList->firstPos;
 
 	while (end != NULL) {
 		POINTER delete = end;
 		end = end->nextPos;
 		free(delete);
 	}
-	anyList->stPos = NULL;
+	anyList->firstPos = NULL;
 }
 
 
@@ -221,9 +224,9 @@ int main() {
 	initializeLinkListDinamic(&myList);
 
 	Register crrYear;
-	crrYear.key = 10;
-	insertElemLinkListOrdDinamic(&myList, crrYear);
 	crrYear.key = 40;
+	insertElemLinkListOrdDinamic(&myList, crrYear);
+	crrYear.key = 10;
 	insertElemLinkListOrdDinamic(&myList, crrYear);
 	crrYear.key = 30;
 	insertElemLinkListOrdDinamic(&myList, crrYear);

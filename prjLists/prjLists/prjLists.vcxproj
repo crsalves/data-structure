@@ -24,6 +24,7 @@
     <ClCompile Include="Linked_List_Dinamic.c" />
     <ClCompile Include="Linked_List_Static.c" />
     <ClCompile Include="Sentinel_Search_List.c" />
+    <ClCompile Include="structure.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -26,7 +26,7 @@
 //
 //typedef struct {
 //	Element tabElem[MAX];
-//	int stPos;// This identifies the first element position
+//	int firstPos;// This identifies the first element position
 //	int availPos;// This indicates available positions
 //}List;
 //
@@ -39,7 +39,7 @@
 //	}
 //
 //	anyList->tabElem[MAX - 1].nextPos = INVALID; // The last element doesn't have next position
-//	anyList->stPos = INVALID; // The first position starts with no next valid position because the list is empty
+//	anyList->firstPos = INVALID; // The first position starts with no next valid position because the list is empty
 //	anyList->availPos = 0; // The index zero is the first available position
 //}
 //
@@ -47,7 +47,7 @@
 //	2) Displaying all elements stored in the list
 //*/
 //void displayLinkedListStatic(List* anyList) {
-//	int indx = anyList->stPos;
+//	int indx = anyList->firstPos;
 //
 //	while (indx != INVALID) {
 //		printf("[%i] = %i\n", indx, anyList->tabElem[indx].reg.key);
@@ -59,7 +59,7 @@
 //	3)  Finding the total number of elements stored in the list
 //*/
 //int findNbElemLinkListStatic(List* anyList) {
-//	int indx = anyList->stPos;
+//	int indx = anyList->firstPos;
 //	int listSize = 0;
 //
 //	while (indx != INVALID) {
@@ -76,7 +76,7 @@
 //KEYTYPE getFstElemLinkListStatic(List* anyList) {
 //	int length = findNbElemLinkListStatic(anyList);
 //	if (length > 0) {
-//		return (anyList->tabElem[anyList->stPos].reg.key);
+//		return (anyList->tabElem[anyList->firstPos].reg.key);
 //	}		
 //	else
 //		return (-1); //empty list
@@ -99,7 +99,7 @@
 //			in the middle may not indicate the ordered middle element
 //*/
 //int searchSeqLinkListOrdStatic(List* anyList, KEYTYPE anyKey) {
-//	int indx = anyList->stPos;
+//	int indx = anyList->firstPos;
 //
 //	// This stops when the current element is bigger than the sought element 
 //	while ((indx != INVALID) && (anyList->tabElem[indx].reg.key < anyKey))
@@ -137,7 +137,7 @@
 //		return false;
 //
 //	int prevPos = INVALID;
-//	int crrPos = anyList->stPos;
+//	int crrPos = anyList->firstPos;
 //	KEYTYPE tmpKey = anyReg.key;
 //
 //	while ((crrPos != INVALID) && (anyList->tabElem[crrPos].reg.key < tmpKey)) {
@@ -156,8 +156,8 @@
 //
 //	// If it is the first element that will be inserted
 //	if (prevPos == INVALID) {
-//		anyList->tabElem[crrPos].nextPos = anyList->stPos;
-//		anyList->stPos = crrPos;
+//		anyList->tabElem[crrPos].nextPos = anyList->firstPos;
+//		anyList->firstPos = crrPos;
 //	}
 //	else // when there is at least one element in the list
 //	{
@@ -185,7 +185,7 @@
 //*/
 //bool deleteElemLinkListStatic(List* anyList, KEYTYPE anyKey) {
 //	int prevPos = INVALID;
-//	int crrPos = anyList->stPos;
+//	int crrPos = anyList->firstPos;
 //
 //	while ((crrPos != INVALID) && (anyList->tabElem[crrPos].reg.key < anyKey)) {
 //		prevPos = crrPos;
@@ -197,7 +197,7 @@
 //		return false;
 //
 //	if (prevPos == INVALID)
-//		anyList->stPos = anyList->tabElem[crrPos].nextPos;
+//		anyList->firstPos = anyList->tabElem[crrPos].nextPos;
 //	else
 //		anyList->tabElem[prevPos].nextPos = anyList->tabElem[crrPos].nextPos;
 //
