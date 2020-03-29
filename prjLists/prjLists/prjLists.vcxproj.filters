@@ -30,7 +30,7 @@
     <ClCompile Include="Linked_List_Dinamic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="structure.c">
+    <ClCompile Include="Linked_List_Circular.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
