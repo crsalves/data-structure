@@ -44,7 +44,7 @@ void initializeLinkListCircular(List* anyList) {
 void displayLinkedListCircular(List* anyList) {
 	POINTER end = anyList->firstPos->nextPos;
 	int counter = 0;// Just for view purposes (to show the index for the user)
-	while (end != NULL) {
+	while (end != anyList->firstPos) {
 		printf("[%i] = %i\n", counter, end->reg.key);
 		end = end->nextPos;
 		counter++;
@@ -230,7 +230,7 @@ int main() {
 	displayLinkedListCircular(&myList);
 
 	crrYear.key = 20;
-	//printf("%i\n", searchSeqLinkListOrdCircular(&myList, crrYear.key));
+	printf("%i\n", searchSeqLinkListOrdCircular(&myList, crrYear.key));
 	//printf("First element is %i\n", getFstElemLinkListCircular(&myList));
 	//printf("Last element is %i\n", getLstElemLinkListCircular(&myList));
 
