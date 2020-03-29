@@ -33,7 +33,7 @@
 //	1) Initializing the list
 //	We must use a pointer as a parameter, otherwise the list will not be updated.
 //*/
-//void initializeSequentialList(List* anyList) {
+//void initializeSeqBinaryList(List* anyList) {
 //	anyList->nbElem = 0;
 //}
 //
@@ -121,7 +121,7 @@
 //		2. Move one position back all elements in the right side
 //		3. Decrement nbElements
 //*/
-//bool deleteElemList(List* anyList, KEYTYPE anyKey) {
+//bool deleteElemBinaryList(List* anyList, KEYTYPE anyKey) {
 //	int pos = searchBinary(anyList, anyKey);
 //
 //	if (pos == -1)  
@@ -140,15 +140,15 @@
 ///*
 //	9) Reinitializing the list
 //*/
-//void reinitializeSequentialList(List* anyList) {
+//void reinitializeSeqBinaryList(List* anyList) {
 //	anyList->nbElem = 0;
 //}
 //
 //
-//int main() {
+//int mainBinary() {
 //
 //	List myList;
-//	initializeSequentialList(&myList);
+//	initializeSeqBinaryList(&myList);
 //
 //	Register crrYear;
 //	crrYear.key = 2020;
