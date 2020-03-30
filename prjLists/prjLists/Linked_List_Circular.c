@@ -82,13 +82,12 @@ KEYTYPE getFstElemLinkListCircular(List* anyList) {
 */
 int getLstElemLinkListCircular(List* anyList) {
 	POINTER end = anyList->head->nextPos;
-	while (end->nextPos != anyList->head) {
-		
+	while (end != anyList->head) {		
 		if (end->nextPos == anyList->head)
 			return end->reg.key;
-		end->nextPos++;
+		end = end->nextPos;
 	}
-	return end->reg.key; //empty list
+	return -1; //empty list
 }
 
 /*
@@ -230,7 +229,7 @@ int main() {
 	insertElemLinkListOrdCircular(&myList, crrYear);
 	displayLinkedListCircular(&myList);
 
-	crrYear.key = 20;
+	crrYear.key = 30;
 	printf("%i\n", searchSeqLinkListOrdCircular(&myList, crrYear.key));
 	printf("First element is %i\n", getFstElemLinkListCircular(&myList));
 	printf("Last element is %i\n", getLstElemLinkListCircular(&myList));
