@@ -21,13 +21,19 @@ typedef struct aux {
 typedef Element* POINTER;
 
 typedef struct {
+	Register tabElem[MAX];
+	int top;
+}StaticStack;
+
+typedef struct {
 	POINTER top;
 }DynamicStack;
 
 typedef struct {
 	Register tabElem[MAX];
-	int top;
-}StaticStack;
+	int top1;
+	int top2;
+}DoubleStack;
 
 // Initialization 
 void initializeStaticStack(StaticStack* nStack) {
@@ -37,6 +43,12 @@ void initializeStaticStack(StaticStack* nStack) {
 // Initialization 
 void initializeDynamicStack(DynamicStack* nStack) {
 	nStack->top = NULL;
+}
+
+// Initialization 
+void initializeDoubleStack(DoubleStack* nStack) {
+	nStack->top1 = -1;
+	nStack->top2 = MAX;
 }
 
 // Numbers of elements (Size)
@@ -65,6 +77,23 @@ void displayDynamicStack(DynamicStack* nStack) {
 	}
 }
 
+// Exhibition
+void displayDoubleStack(DoubleStack* nStack, int nTop) {
+	if (nTop < 1 || nTop > 2)
+		return false; 
+	
+	int indx;
+
+	if(nTop == 1)
+		for (indx = nStack->top1; indx >= 0; indx--)
+			printf("%i \n", nStack->tabElem[indx].key);
+	else
+		for (int indx = nStack->top2; indx < MAX; indx++)
+			printf("%i \n", nStack->tabElem[indx].key);
+
+	return true;
+}
+
 // Inserting elements (PUSH)
 bool pushStaticStack(StaticStack* nStack, Register nReg) {
 	if (nStack->top >= MAX - 1)// Test for available position
@@ -81,6 +110,25 @@ bool pushDynamicStack(DynamicStack* nStack, Register nReg) {
 	newElem->reg = nReg;
 	newElem->next = nStack->top;
 	nStack->top = newElem;
+	return true;
+}
+
+// Inserting elements (PUSH)
+bool pushDoubleStack(DoubleStack* nStack, Register nReg, int nTop) {
+	if (nTop < 1 || nTop > 2)
+		return false;
+
+	if (nStack->top1 + 1 == nStack->top2) // There is no position available
+		return false;
+
+	if (nTop == 1) {
+		nStack->top1 = nStack->top1 + 1;
+		nStack->tabElem[nStack->top1] = nReg;
+	}
+	else {
+		nStack->top2 = nStack->top2 - 1;
+		nStack->tabElem[nStack->top2] = nReg;
+	}
 	return true;
 }
 
@@ -106,6 +154,28 @@ bool popDynamicStack(DynamicStack* nStack, Register* nReg) {
 	return true;
 }
 
+// Excluding/Deleting (POP)
+bool popDoubleStack(DoubleStack* nStack, Register* nReg, int nTop) {
+	if (nTop < 1 || nTop > 2)
+		return false;
+
+	if (nTop == 1) {
+		if (nStack->top1 == -1)
+			return false;
+
+		*nReg = nStack->tabElem[nStack->top1];
+		nStack->top1 = nStack->top1 - 1;
+	}
+	else {
+		if (nStack->top2 == MAX)
+			return false;
+
+		*nReg = nStack->tabElem[nStack->top2];
+		nStack->top2 = nStack->top1 + 1;
+	}
+	return true;
+}
+
 // Reinicialization
 void restartStaticStack(StaticStack* nStack) {
 	nStack->top = -1;
@@ -122,4 +192,9 @@ void restartDynamicStack(DynamicStack* nStack) {
 		free(delElem);
 	}
 	nStack->top = NULL;
+}
+
+// Reinicialization
+void restartDoubleStack(DoubleStack* nStack) {
+	initializeDoubleStack(&nStack);
 }

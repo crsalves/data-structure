@@ -21,6 +21,9 @@
     <ClCompile Include="Dynamic_Stack.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Double_Stack.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stacklib.h">
