@@ -16,4 +16,6 @@ int main() {
 	// it always deletes the last element inserted (LIFO)
 	popDynamicStack(&myStack, &myReg);
 	displayDynamicStack(&myStack);
+	
+	return 0;
 }

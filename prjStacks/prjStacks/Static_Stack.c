@@ -16,5 +16,6 @@
 //	// it always deletes the last element inserted (LIFO)
 //	popStaticStack(&myStack, &myReg);
 //	displayStack(&myStack);
+//		return 0;
 //}
 
