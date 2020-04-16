@@ -50,12 +50,13 @@ int findNbElemDynamicStack(DynamicStack* nStack) {
 	return nbElem;
 }
 
-// Exibition
+// Exhibition
 void displayStaticStack(StaticStack* nStack) {
 	for (int indx = nStack->top; indx >= 0; indx--)
 		printf("%i \n", nStack->tabElem[indx].key);
 }
 
+// Exhibition
 void displayDynamicStack(DynamicStack* nStack) {
 	POINTER end = nStack->top;
 	while (end != NULL) {
