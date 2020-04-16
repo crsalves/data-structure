@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dynamic_Stack.c" />
     <ClCompile Include="Static_Stack.c" />
   </ItemGroup>
   <ItemGroup>
