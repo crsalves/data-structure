@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dynamic_Queue.c" />
     <ClCompile Include="Static_Queue.c" />
   </ItemGroup>
   <ItemGroup>
