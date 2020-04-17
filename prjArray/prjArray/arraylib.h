@@ -20,20 +20,6 @@ typedef struct {
 	int column;
 }Array_2D;
 
-// BOOK
-typedef struct Struture {
-	int row;
-	int column;
-	// TIPOINFO info;
-	struct Struture* next;
-}Node2;
-
-typedef struct {
-	Node2* start;
-}Matrix;
-
-
-
 // Initialization 
 void initializeArray(Array_2D* nArray, int nRow, int nColumn) {
 	nArray->row = nRow;
