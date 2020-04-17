@@ -1,13 +1,13 @@
 #include"arraylib.h"
 
 int main() {
-	Array myArray;
+	Array_2D myArray;
 	initializeArray(&myArray, 3, 4);
+	insertElemArray(&myArray, 1, 1, 22.5);
+	displayArray(&myArray);
 
-	
-	insertElemArray(&myArray, 1, 1, 2.5);
-
-	displayArray(&myArray, 1, 1);
+	insertElemArray(&myArray, 1, 2, 34.5);
+	displayArray(&myArray);
 	
 	return 0;
 }

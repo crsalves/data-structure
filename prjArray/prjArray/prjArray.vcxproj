@@ -138,7 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Array.c" />
+    <ClCompile Include="Array_2Dimensional.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arraylib.h" />

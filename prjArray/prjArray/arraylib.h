@@ -16,31 +16,45 @@ typedef Node* Pointer;
 
 typedef struct {
 	Pointer* Matrix;
-	int rows;
-	int columns;
-}Array;
+	int row;
+	int column;
+}Array_2D;
+
+// BOOK
+typedef struct Struture {
+	int row;
+	int column;
+	// TIPOINFO info;
+	struct Struture* next;
+}Node2;
+
+typedef struct {
+	Node2* start;
+}Matrix;
+
+
 
 // Initialization 
-void initializeArray(Array* nArray, int nRow, int nColumn) {
-	nArray->rows = nRow;
-	nArray->columns = nColumn;
+void initializeArray(Array_2D* nArray, int nRow, int nColumn) {
+	nArray->row = nRow;
+	nArray->column = nColumn;
 	nArray->Matrix = (Pointer*)malloc(nColumn * sizeof(Pointer));
 	for (int indx = 0; indx < nRow; indx++)
 		nArray->Matrix[indx] = NULL;
 }
 
 // Inserting
-bool insertElemArray(Array* nArray, int nRow, int nColunm, float nValue) {
+bool insertElemArray(Array_2D* nArray, int nRow, int nColunm, float nValue) {
 	if ((nRow < 0))
 		return false;
 
-	if (nRow >= nArray->rows)
+	if (nRow >= nArray->row)
 		return false;
 
 	if (nColunm < 0)
 		return false;
 
-	if (nColunm >= nArray->columns)
+	if (nColunm >= nArray->column)
 		return false;
 
 	Pointer prev = NULL;
@@ -74,17 +88,17 @@ bool insertElemArray(Array* nArray, int nRow, int nColunm, float nValue) {
 	return true;
 }
 
-float accessArray(Array* nArray, int nRow, int nColumn) {
+float accessArray(Array_2D* nArray, int nRow, int nColumn) {
 	if ((nRow < 0))
 		return false;
 
-	if(nRow >= nArray->rows) 
+	if(nRow >= nArray->row) 
 		return false;
 
 	if (nColumn < 0)
 		return false;
 
-	if (nColumn >= nArray->columns)
+	if (nColumn >= nArray->column)
 		return false;
 
 	Pointer current = nArray->Matrix[nRow];
@@ -98,11 +112,12 @@ float accessArray(Array* nArray, int nRow, int nColumn) {
 	return 0;
 }
 
-void displayArray(Array* nArray, int nRow, int nColumn) {
-	Pointer current = nArray->Matrix[nRow];
+void displayArray(Array_2D* nArray) {
+	Pointer current = nArray->Matrix[1];// First element is at position number 1
+
 	while (current != NULL)
 	{
-		printf("%i\n", nArray->Matrix[nColumn]->value);
+		printf("%0.2f\n", current->value);
 		current = current->next;
 	}
 }
