@@ -1,15 +1,15 @@
-#include"treelib.h"
-
-int main() {
-
-	Pointer myTree = initializeBinaryTree();
-	Pointer myNode = createNewNode(10);
-
-	myTree = insertBinaryTree(myTree, myNode);
-
-	myNode = createNewNode(5);
-	myTree = insertBinaryTree(myTree, myNode);
-
-	displayBinaryTree(myTree);
-	return 0;
-}
+//#include"treelib.h"
+//
+//int main() {
+//
+//	Pointer1 myTree = initializeBinaryTree();
+//	Pointer1 myNode = createNewNode1(10);
+//
+//	myTree = insertBinaryTree(myTree, myNode);
+//
+//	myNode = createNewNode1(5);
+//	myTree = insertBinaryTree(myTree, myNode);
+//
+//	displayBinaryTree(myTree);
+//	return 0;
+//}

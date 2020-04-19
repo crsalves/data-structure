@@ -11,18 +11,42 @@ typedef int Keytype;
 typedef struct aux {
 	Keytype key;
 	/* Data goes here */
-	struct aux* left, * right;
-}Node;
+	struct aux *left, *right;
+}Node1;
+typedef Node1* Pointer1;
 
-typedef Node* Pointer;
+
+// Non_Binary_Tree
+typedef struct auxNode {
+	Keytype key;
+	/* Data goes here */
+	struct auxNode *firstChild, *nextChild;
+}Node2;
+typedef Node2* Pointer2;
 
 // Initialization
-Pointer initializeBinaryTree() {
+Pointer1 initializeBinaryTree() {
 	return (NULL);
 }
 
+
+
+// Auxiliary Function
+Pointer2 createNewNode2(Keytype nKey) {
+	Pointer2 newNode = (Pointer2)malloc(sizeof(Node2));
+	newNode->firstChild = NULL;
+	newNode->nextChild = NULL;
+	newNode->key = nKey;
+	return (newNode);
+}
+
+// Initialization
+Pointer2 initializeNonBinaryTree(Keytype nKey) {
+	return (createNewNode2(nKey));
+}
+
 // Inserting one element
-Pointer insertBinaryTree(Pointer nRoot, Pointer nNode) {
+Pointer1 insertBinaryTree(Pointer1 nRoot, Pointer1 nNode) {
 	if (nRoot == NULL)
 		return (nNode);
 
@@ -36,8 +60,8 @@ Pointer insertBinaryTree(Pointer nRoot, Pointer nNode) {
 }
 
 // Auxiliary Function: use this function before calling insert()
-Pointer createNewNode(Keytype nKey) {
-	Pointer newNode = (Pointer)malloc(sizeof(Node));
+Pointer1 createNewNode1(Keytype nKey) {
+	Pointer1 newNode = (Pointer1)malloc(sizeof(Node1));
 	newNode->left = NULL;
 	newNode->right = NULL;
 
@@ -46,7 +70,48 @@ Pointer createNewNode(Keytype nKey) {
 }
 
 // Searching elements
-Pointer containElemBinaryTree(Keytype nKey, Pointer nRoot) {
+Pointer2 containElemNonBinaryTree(Keytype nKey, Pointer2 nRoot) {
+	if (nRoot == NULL)
+		return NULL;
+
+	if (nRoot->key == nKey)
+		return (nRoot);
+
+	Pointer2 parent = nRoot->firstChild;
+	while (parent) {// Searching the child in the sub-tree where it is root
+		Pointer2 tmp = containElemNonBinaryTree(nKey, parent);
+		if (tmp)
+			return tmp;
+
+		parent = parent->nextChild;
+	}
+	return NULL;
+}
+
+// Inserting one element
+bool insertNonBinaryTree(Pointer2 nRoot, Keytype nNewKey, Keytype nKeyParent) {
+	Pointer2 parent = containElemNonBinaryTree(nKeyParent, nRoot);
+
+
+	if (!parent)
+		return (false);
+
+	Pointer2 child = createNewNode2(nNewKey);
+	Pointer2 firstborn = parent->firstChild;
+	if (!parent)
+		parent->firstChild = child;
+	else {// when it already has children
+
+		while (parent->nextChild)
+			parent = parent->nextChild;
+
+		parent->nextChild = child;
+	}
+	return (true);
+}
+
+// Searching elements
+Pointer1 containElemBinaryTree(Keytype nKey, Pointer1 nRoot) {
 	if (nRoot == NULL)
 		return (NULL);
 
@@ -59,14 +124,14 @@ Pointer containElemBinaryTree(Keytype nKey, Pointer nRoot) {
 }
 
 // Counting numbers of elements
-int countNode(Pointer nRoot) {
+int countNode(Pointer1 nRoot) {
 	if (!nRoot)
 		return 0;
 	return (countNode(nRoot->left) + 1 + (countNode(nRoot->right)));
 }
 
 // Exhibition
-void displayBinaryTree(Pointer nRoot) {
+void displayBinaryTree(Pointer1 nRoot) {
 	if (nRoot != NULL) {
 		printf("%i\n", nRoot->key);
 		displayBinaryTree(nRoot->left);
@@ -74,9 +139,22 @@ void displayBinaryTree(Pointer nRoot) {
 	}
 }
 
+// Exhibition
+void displayNonBinaryTree(Pointer2 nRoot) {
+	if (nRoot == NULL)
+		return; // it is not a good practice for void function!
+
+	printf("%i\n", nRoot->key);
+	Pointer2 parent = nRoot->firstChild;
+	while (parent) {
+		displayNonBinaryTree(parent);
+		parent = parent->nextChild;
+	}	
+}
+
 // Searching Nodes
-Pointer findNodeBinaryTree(Pointer nRoot, Keytype nKey, Pointer* nParent) {
-	Pointer currentNode = nRoot;
+Pointer1 findNodeBinaryTree(Pointer1 nRoot, Keytype nKey, Pointer1* nParent) {
+	Pointer1 currentNode = nRoot;
 	*nParent = NULL;
 	while (currentNode) {
 		if (currentNode->key == nKey)
@@ -91,8 +169,8 @@ Pointer findNodeBinaryTree(Pointer nRoot, Keytype nKey, Pointer* nParent) {
 }
 
 // Deleting
-Pointer deleteOneNodeBinaryTree(Pointer nRoot, Keytype nKey) {
-	Pointer nodeParent, node4Deleting, tmpParent, tmpChild;
+Pointer1 deleteOneNodeBinaryTree(Pointer1 nRoot, Keytype nKey) {
+	Pointer1 nodeParent, node4Deleting, tmpParent, tmpChild;
 	node4Deleting = findNodeBinaryTree(nRoot, nKey, &nodeParent);
 
 	if (node4Deleting == NULL)

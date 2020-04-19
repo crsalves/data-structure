@@ -18,6 +18,9 @@
     <ClCompile Include="Binary_Tree.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Non_Binary_Tree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="treelib.h">
