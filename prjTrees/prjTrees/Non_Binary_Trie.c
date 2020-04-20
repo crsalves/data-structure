@@ -1,7 +1,7 @@
-#include"treelib.h"
-
-int main() {
-
-	Pointer myTrie = initializeTrie();
-	return 0;
-}
+//#include"treelib.h"
+//
+//int main() {
+//
+//	Pointer myTrie = initializeTrie();
+//	return 0;
+//}

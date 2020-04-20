@@ -4,9 +4,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+
 #define true 1
 #define false 0
-#define ALPHABET 26
 
 typedef int bool;
 typedef int Keytype;
@@ -27,6 +27,9 @@ typedef struct auxNode {
 }Node2;
 typedef Node2* Pointer2;
 
+
+// Trie
+#define ALPHABET 26
 typedef bool RETURNTYPE;
 
 typedef struct axNode {
@@ -35,6 +38,109 @@ typedef struct axNode {
 }Node;
 
 typedef Node* Pointer;
+
+// AVL Tree
+typedef struct auxAVL {
+	Keytype key;
+	/* Data goes here */
+	struct auxAVL* leftAVL, * rightAVL;
+	int height;
+}NodeAVL, *PointerAVL;
+
+// Auxiliary function AVL
+PointerAVL createNodeAVL(Keytype nKey) {
+	PointerAVL newNode = (PointerAVL)malloc(sizeof(NodeAVL));
+	newNode->leftAVL = NULL;
+	newNode->rightAVL = NULL;
+	newNode->key = nKey;
+	return newNode;
+}
+
+// Initialization
+PointerAVL initializeAVL() {
+	return NULL;
+}
+
+// Rotations to balance right/left sides
+int findMax(int a, int b) {
+	if (a > b)
+		return a;
+	return b;
+}
+
+int findHeight(PointerAVL nRoot) {
+	if (!nRoot)
+		return (-1);
+	return nRoot;
+}
+
+PointerAVL balanceRight(PointerAVL nNode) {
+	PointerAVL tmp;
+	tmp = nNode->leftAVL;
+	nNode->leftAVL = tmp->rightAVL;
+	tmp->rightAVL = tmp;
+
+	nNode->height = findMax(findHeight(nNode->rightAVL), findHeight(nNode->leftAVL)) + 1;
+	tmp->height = findMax(findHeight(nNode->leftAVL), nNode->height) + 1;
+	return tmp;
+}
+
+PointerAVL balanceLeft(PointerAVL nNode) {
+	PointerAVL tmp;
+	tmp = nNode->rightAVL;
+	nNode->rightAVL = tmp->leftAVL;
+	tmp->leftAVL = tmp;
+
+	nNode->height = findMax(findHeight(nNode->rightAVL), findHeight(nNode->leftAVL)) + 1;
+	tmp->height = findMax(findHeight(nNode->rightAVL), nNode->height) + 1;
+	return tmp;
+}
+
+// Double rotations
+PointerAVL balanceLeftRight(PointerAVL nNode) {
+	nNode->leftAVL = balanceLeft(nNode->leftAVL);
+	return (balanceRight(nNode));
+}
+
+PointerAVL balanceRightLeft(PointerAVL nNode) {
+	nNode->rightAVL = balanceRight(nNode->rightAVL);
+	return (balanceLeft(nNode));
+}
+// Inserting at AVL
+PointerAVL insertAVL(PointerAVL nRoot, Keytype nKey) {
+	if (!nRoot)
+		return (createNodeAVL(nKey));
+
+	// Checking the balance
+	if (nKey < nRoot->key) {
+		nRoot->leftAVL = insertAVL(nRoot->leftAVL, nKey);
+
+		int leftHeight = findHeight(nRoot->leftAVL);
+		int rightHeight = findHeight(nRoot->rightAVL);
+		if ((leftHeight - rightHeight) == 2) {
+			if (nKey < nRoot->leftAVL->key)
+				nRoot = balanceRight(nRoot); // simple rotation
+			else
+				nRoot = balanceLeftRight(nRoot); // Double rotation
+		}
+		else if (nKey > nRoot->key) {
+			nRoot->rightAVL = insertAVL(nRoot->rightAVL, nKey);
+
+			int leftHeight = findHeight(nRoot->leftAVL);
+			int rightHeight = findHeight(nRoot->rightAVL);
+			if ((leftHeight - rightHeight) == 2) {
+				if (nKey > nRoot->rightAVL->key)
+					nRoot = balanceLeft(nRoot); // simple rotation
+				else
+					nRoot = balanceRightLeft(nRoot); // Double rotation
+			}
+		}
+
+		nRoot->height = findMax(findHeight(nRoot->leftAVL), findHeight(nRoot->rightAVL)) + 1;
+		return nRoot;
+	}
+}
+
 
 // Auxiliary Function
 Pointer createTrieNode() {
@@ -49,6 +155,7 @@ Pointer createTrieNode() {
 	}
 	return parent;
 }
+
 
 // Initialization
 Pointer initializeTrie() {
@@ -98,12 +205,13 @@ bool findWord(Pointer nRoot, char* nKey) {
 	return (parent->end);
 }
 
+
+
+
 // Initialization
 Pointer1 initializeBinaryTree() {
 	return (NULL);
 }
-
-
 
 // Auxiliary Function
 Pointer2 createNewNode2(Keytype nKey) {
