@@ -1,9 +1,12 @@
 #pragma once
 #include<stdio.h>
 #include<stdlib.h>
-
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 #define true 1
 #define false 0
+#define ALPHABET 26
 
 typedef int bool;
 typedef int Keytype;
@@ -11,7 +14,7 @@ typedef int Keytype;
 typedef struct aux {
 	Keytype key;
 	/* Data goes here */
-	struct aux *left, *right;
+	struct aux* left, * right;
 }Node1;
 typedef Node1* Pointer1;
 
@@ -20,9 +23,80 @@ typedef Node1* Pointer1;
 typedef struct auxNode {
 	Keytype key;
 	/* Data goes here */
-	struct auxNode *firstChild, *nextChild;
+	struct auxNode* firstChild, * nextChild;
 }Node2;
 typedef Node2* Pointer2;
+
+typedef bool RETURNTYPE;
+
+typedef struct axNode {
+	struct axNode* children[ALPHABET];
+	RETURNTYPE end;
+}Node;
+
+typedef Node* Pointer;
+
+// Auxiliary Function
+Pointer createTrieNode() {
+	Pointer parent = NULL;
+
+	parent = (Pointer)malloc(sizeof(Node));
+
+	if (parent) {
+		parent->end = false;// It marks each node as it is not the end of the word
+		for (int i = 0; i < ALPHABET; i++)
+			parent->children[i] = NULL;
+	}
+	return parent;
+}
+
+// Initialization
+Pointer initializeTrie() {
+	return (createTrieNode());
+}
+
+// Mapping the Trie
+int mapIndexTrie(char letter) {
+	return ((int)letter - (int)'a');
+}
+
+// Inserting 
+void insertTrie(Pointer nRoot, char* nKey) {
+	int level;
+	int length = strlen(nKey);
+	int indx;
+
+	Pointer parent = nRoot;
+	for (level = 0; level < length; level++) {
+		indx = mapIndexTrie(nKey[level]);
+
+		if (!parent->children[indx])
+			parent->children[indx] = createTrieNode();
+
+		parent = parent->children[indx];
+	}
+
+	parent->end = true;
+}
+
+// Searching
+bool findWord(Pointer nRoot, char* nKey) {
+	int level;
+	int length = strlen(nKey);
+	int indx;
+
+	Pointer parent = nRoot;
+	for (level = 0; level < length; level++) {
+		indx = mapIndexTrie(nKey[level]);
+
+		if (!parent->children[indx])
+			return false;
+
+		parent = parent->children[indx];
+	}
+
+	return (parent->end);
+}
 
 // Initialization
 Pointer1 initializeBinaryTree() {

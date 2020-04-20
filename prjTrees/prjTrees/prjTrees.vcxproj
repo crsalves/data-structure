@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="Binary_Tree.c" />
     <ClCompile Include="Non_Binary_Tree.c" />
+    <ClCompile Include="Non_Binary_Trie.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="treelib.h" />

@@ -1,4 +1,4 @@
-#include"trielib.h"
+#include"treelib.h"
 
 int main() {
 
